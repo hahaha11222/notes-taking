@@ -26,13 +26,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function createTrashIcon() {
     if (!trashBtn) {
-      const h2 = document.querySelector('#watchlist h2');
+      const header = document.querySelector('#watchlist h2');
       const wrapper = document.createElement('div');
       wrapper.className = 'watchlist-header';
+      header.replaceWith(wrapper);
 
-      const title = document.createElement('h2');
-      title.textContent = 'Watchlist';
-      wrapper.appendChild(title);
+      const h2 = document.createElement('h2');
+      h2.textContent = 'Watchlist';
+      wrapper.appendChild(h2);
 
       trashBtn = document.createElement('button');
       trashBtn.innerHTML = '🗑️';
@@ -56,9 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         exitSelectMode();
       };
-
       wrapper.appendChild(trashBtn);
-      h2.replaceWith(wrapper);
     }
   }
 
@@ -69,16 +68,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const checkbox = wrapper.querySelector('.folder-checkbox input');
       if (checkbox) checkbox.checked = false;
     });
+    if (trashBtn) trashBtn.remove();
+    trashBtn = null;
 
-    if (trashBtn) {
-      trashBtn.remove();
-      trashBtn = null;
-    }
-
-    const newH2 = document.createElement('h2');
-    newH2.textContent = 'Watchlist';
-    const wrapper = document.querySelector('.watchlist-header');
-    wrapper.replaceWith(newH2);
+    const hWrap = document.createElement('h2');
+    hWrap.textContent = 'Watchlist';
+    const container = document.querySelector('.watchlist-header');
+    container.replaceWith(hWrap);
   }
 
   window.createFolder = function (name, color) {
@@ -106,9 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
     checkboxWrap.appendChild(checkbox);
     folder.appendChild(checkboxWrap);
 
-    // ✅ Long press support for mobile (pointerdown + pointerup)
     let pressTimer;
-    folder.addEventListener('pointerdown', (e) => {
+    folder.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
       pressTimer = setTimeout(() => {
         isSelecting = true;
         createTrashIcon();
@@ -116,15 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
           fw.classList.add('select-mode');
         });
         checkbox.checked = true;
-      }, 500); // 500ms hold
+      }, 500);
     });
 
-    folder.addEventListener('pointerup', () => clearTimeout(pressTimer));
-    folder.addEventListener('pointerleave', () => clearTimeout(pressTimer));
-    folder.addEventListener('touchend', () => clearTimeout(pressTimer)); // extra for mobile
-    folder.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+    folder.addEventListener('mouseup', () => clearTimeout(pressTimer));
+    folder.addEventListener('mouseleave', () => clearTimeout(pressTimer));
 
-    // Rename
     const actions = document.createElement('div');
     actions.className = 'folder-actions hidden';
 
@@ -172,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     actions.appendChild(renameBtn);
     folder.appendChild(actions);
-
     folder.addEventListener('dblclick', (e) => {
       e.stopPropagation();
       actions.classList.toggle('hidden');
@@ -285,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Empty notes
   const folderContainer = document.getElementById('watchlist-folders');
   if (folderContainer && folderContainer.children.length === 0) {
     const note = document.createElement('p');
@@ -296,5 +289,33 @@ document.addEventListener('DOMContentLoaded', function () {
     note.style.width = '100%';
     note.style.pointerEvents = 'none';
     folderContainer.appendChild(note);
+  }
+
+  const watchingContainer = document.getElementById('watching-movies');
+  if (watchingContainer && watchingContainer.children.length === 0) {
+    const note = document.createElement('p');
+    note.textContent = 'Nothing here yet. Add movies you are watching.';
+    note.id = 'empty-watching';
+    note.style.textAlign = 'center';
+    note.style.marginTop = '20px';
+    note.style.opacity = '0.6';
+    note.style.width = '100%';
+    note.style.gridColumn = '1 / -1';
+    note.style.pointerEvents = 'none';
+    watchingContainer.appendChild(note);
+  }
+
+  const finishedContainer = document.getElementById('finished-movies');
+  if (finishedContainer && finishedContainer.children.length === 0) {
+    const note = document.createElement('p');
+    note.textContent = 'No finished movies yet.';
+    note.id = 'empty-finished';
+    note.style.textAlign = 'center';
+    note.style.marginTop = '20px';
+    note.style.opacity = '0.6';
+    note.style.width = '100%';
+    note.style.gridColumn = '1 / -1';
+    note.style.pointerEvents = 'none';
+    finishedContainer.appendChild(note);
   }
 });
