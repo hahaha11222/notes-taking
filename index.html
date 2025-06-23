@@ -1,282 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notes Taking</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #ffd6e0; /* Pastel pink */
-      color: #333;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-    }
-
-    .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 500px;
-      width: 90%;
-    }
-
-    h1 {
-      color: #ff6392;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-    }
-
-    p {
-      margin: 10px 0 20px;
-      font-size: 1em;
-      color: #555;
-    }
-
-    .section {
-      margin: 10px 0;
-      cursor: pointer;
-      background: #ffe0e8;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: left;
-      font-size: 1em;
-      transition: transform 0.2s ease, background 0.3s ease;
-    }
-
-    .section:hover {
-      background: #ffccd5;
-      transform: scale(1.05);
-    }
-
-    .section:active {
-      transform: scale(0.98);
-    }
-
-    .inputs {
-      display: none;
-      margin-top: 10px;
-      transition: all 0.3s ease-in-out;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-
-    button {
-      background: #ff6392;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #e55784;
-    }
-
-    .saved-notes {
-      margin-top: 20px;
-      background: #ffe0e8;
-      padding: 15px;
-      border-radius: 8px;
-      display: none;
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .saved-notes.show {
-      display: block;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .saved-notes p {
-      margin: 5px 0;
-      font-size: 1.1em;
-      color: #555;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5em;
-      }
-
-      input, textarea, button {
-        font-size: 14px;
-      }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Puke</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>Notes Taking</h1>
-    <p>Since I’m a person who forgets easily, I created this so I’ll know where to look in case I forget something about you.</p>
-
-    <div class="section" onclick="toggleInputs('colorsInputs', this)">Favorite Colors</div>
-    <div id="colorsInputs" class="inputs">
-      <input type="text" id="favoriteColors" placeholder="Enter favorite colors">
+<body class="theme-red theme-home">
+  <nav class="navbar">
+    <h1 class="logo">pUKE</h1>
+    <div class="user-settings">
+      <label for="profile-upload">
+        <img id="profile-pic" src="https://via.placeholder.com/60" alt="Profile" />
+      </label>
+      <input type="file" id="profile-upload" accept="image/*" hidden />
     </div>
+  </nav>
 
-    <div class="section" onclick="toggleInputs('foodInputs', this)">Favorite Food</div>
-    <div id="foodInputs" class="inputs">
-      <input type="text" id="favoriteFood" placeholder="Enter favorite food">
-    </div>
+  <main>
+    <section id="home" class="page-section">
+      <section class="welcome">
+        <h2>Welcome back, Avriel</h2>
+        <p>Your cinematic journey, organized and cherished in one beautiful space.</p>
+      </section>
 
-    <div class="section" onclick="toggleInputs('snacksInputs', this)">Favorite Snacks</div>
-    <div id="snacksInputs" class="inputs">
-      <input type="text" id="favoriteSnacks" placeholder="Enter favorite snacks">
-    </div>
+      <section class="category-cards">
+        <div class="card" data-target="watchlist">
+          <h3>🎞️ Watchlist</h3>
+          <p>Plan your next movie night</p>
+        </div>
+        <div class="card" data-target="watching">
+          <h3>⏳ Currently Watching</h3>
+          <p>Track your ongoing favorites</p>
+        </div>
+        <div class="card" data-target="finished">
+          <h3>✅ Finished</h3>
+          <p>Celebrate what you've completed</p>
+        </div>
+      </section>
 
-    <div class="section" onclick="toggleInputs('drinksInputs', this)">Favorite Drinks</div>
-    <div id="drinksInputs" class="inputs">
-      <input type="text" id="favoriteDrinks" placeholder="Enter favorite drinks">
-    </div>
+      <section class="favorites">
+        <div class="section-header">
+          <h4>Top Picks</h4>
+        </div>
+        <div class="poster-row" id="top-picks">
+          <div class="poster-slot">+</div>
+          <div class="poster-slot">+</div>
+          <div class="poster-slot">+</div>
+        </div>
+      </section>
 
-    <div class="section" onclick="toggleInputs('moviesInputs', this)">Favorite Movies</div>
-    <div id="moviesInputs" class="inputs">
-      <input type="text" id="favoriteMovies" placeholder="Enter favorite movies">
-    </div>
+      <footer class="theme-switch">
+        <span onclick="setTheme('red')" class="dot red"></span>
+        <span onclick="setTheme('black')" class="dot black"></span>
+        <span onclick="setTheme('blue')" class="dot blue"></span>
+      </footer>
+    </section>
 
-    <div class="section" onclick="toggleInputs('songsInputs', this)">Favorite Songs</div>
-    <div id="songsInputs" class="inputs">
-      <input type="text" id="favoriteSongs" placeholder="Enter favorite songs">
-    </div>
+    <!-- WATCHLIST PAGE -->
+    <section id="watchlist" class="page-section hidden">
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <div class="watchlist-header">
+        <h2>Watchlist</h2>
+        <button id="trash-icon" class="hidden trash-icon" onclick="deleteSelectedFolders()">🗑️</button>
+      </div>
+      <div class="folder-container" id="watchlist-folders"></div>
+      <button class="fab" onclick="showFolderPrompt()">＋</button>
+    </section>
 
-    <div class="section" onclick="toggleInputs('placesInputs', this)">Favorite Places</div>
-    <div id="placesInputs" class="inputs">
-      <input type="text" id="favoritePlaces" placeholder="Enter favorite places">
-    </div>
+    <!-- WATCHING PAGE -->
+    <section id="watching" class="page-section hidden">
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <h2>Currently Watching</h2>
+      <div class="movie-list netflix-style" id="watching-movies"></div>
+    </section>
 
-    <div class="section" onclick="toggleInputs('othersInputs', this)">Others</div>
-    <div id="othersInputs" class="inputs">
-      <textarea id="others" rows="4" placeholder="Enter other details..."></textarea>
-    </div>
+    <!-- FINISHED PAGE -->
+    <section id="finished" class="page-section hidden">
+      <button class="back-btn" onclick="showPage('home')">← Back</button>
+      <h2>Finished</h2>
+      <div class="movie-list netflix-style" id="finished-movies"></div>
+    </section>
+  </main>
 
-    <button onclick="saveNotes()">Save Notes</button>
-
-    <div id="savedNotes" class="saved-notes">
-      <p><strong>Saved Notes:</strong></p>
-      <p id="savedColors">Colors: Not specified</p>
-      <p id="savedFood">Food: Not specified</p>
-      <p id="savedSnacks">Snacks: Not specified</p>
-      <p id="savedDrinks">Drinks: Not specified</p>
-      <p id="savedMovies">Movies: Not specified</p>
-      <p id="savedSongs">Songs: Not specified</p>
-      <p id="savedPlaces">Places: Not specified</p>
-      <p id="savedOthers">Other Notes: Not specified</p>
-    </div>
-  </div>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"></script>
-  <script>
-    // Initialize Firebase with your configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAwbv2dT2wCU1tjUsmOPiuDRpl_pAfPlNc",
-      authDomain: "avriel-daf2a.firebaseapp.com",
-      databaseURL: "https://avriel-daf2a-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "avriel-daf2a",
-      storageBucket: "avriel-daf2a.appspot.com",
-      messagingSenderId: "721873123381",
-      appId: "1:721873123381:web:afb4cfa3834785571c597c"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database(app);
-
-    // Toggle input sections visibility with effect
-    function toggleInputs(id, element) {
-      const inputSection = document.getElementById(id);
-      const isVisible = inputSection.style.display === 'block';
-
-      const sections = document.querySelectorAll('.inputs');
-      sections.forEach((section) => {
-        section.style.display = 'none';
-      });
-
-      const sectionHeaders = document.querySelectorAll('.section');
-      sectionHeaders.forEach((header) => {
-        header.style.transform = "scale(1)";
-      });
-
-      if (isVisible) {
-        inputSection.style.display = 'none';
-        element.style.transform = "scale(1)";
-      } else {
-        inputSection.style.display = 'block';
-        element.style.transform = "scale(1.05)";
-      }
-    }
-
-    // Save notes to Firebase
-    function saveNotes() {
-      const favoriteColors = document.getElementById('favoriteColors').value;
-      const favoriteFood = document.getElementById('favoriteFood').value;
-      const favoriteSnacks = document.getElementById('favoriteSnacks').value;
-      const favoriteDrinks = document.getElementById('favoriteDrinks').value;
-      const favoriteMovies = document.getElementById('favoriteMovies').value;
-      const favoriteSongs = document.getElementById('favoriteSongs').value;
-      const favoritePlaces = document.getElementById('favoritePlaces').value;
-      const others = document.getElementById('others').value;
-
-      // Save data to Firebase
-      const notesRef = database.ref('notes');
-      notesRef.set({
-        colors: favoriteColors,
-        food: favoriteFood,
-        snacks: favoriteSnacks,
-        drinks: favoriteDrinks,
-        movies: favoriteMovies,
-        songs: favoriteSongs,
-        places: favoritePlaces,
-        others: others
-      }).then(() => {
-        // Show the saved notes in the UI
-        document.getElementById('savedColors').innerText = `Colors: ${favoriteColors || 'Not specified'}`;
-        document.getElementById('savedFood').innerText = `Food: ${favoriteFood || 'Not specified'}`;
-        document.getElementById('savedSnacks').innerText = `Snacks: ${favoriteSnacks || 'Not specified'}`;
-        document.getElementById('savedDrinks').innerText = `Drinks: ${favoriteDrinks || 'Not specified'}`;
-        document.getElementById('savedMovies').innerText = `Movies: ${favoriteMovies || 'Not specified'}`;
-        document.getElementById('savedSongs').innerText = `Songs: ${favoriteSongs || 'Not specified'}`;
-        document.getElementById('savedPlaces').innerText = `Places: ${favoritePlaces || 'Not specified'}`;
-        document.getElementById('savedOthers').innerText = `Other Notes: ${others || 'Not specified'}`;
-
-        // Display the saved notes section
-        const savedNotesSection = document.getElementById('savedNotes');
-        savedNotesSection.classList.add('show');
-
-        // Clear the input fields
-        document.getElementById('favoriteColors').value = '';
-        document.getElementById('favoriteFood').value = '';
-        document.getElementById('favoriteSnacks').value = '';
-        document.getElementById('favoriteDrinks').value = '';
-        document.getElementById('favoriteMovies').value = '';
-        document.getElementById('favoriteSongs').value = '';
-        document.getElementById('favoritePlaces').value = '';
-        document.getElementById('others').value = '';
-      }).catch((error) => {
-        console.error("Error saving data to Firebase:", error);
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
