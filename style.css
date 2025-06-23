@@ -130,13 +130,25 @@ body {
 .dot.black { background: #111; }
 .dot.blue { background: #4da6ff; }
 
+/* ✅ Improved Back Button */
 .back-btn {
-  background: transparent;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px solid var(--accent);
   color: var(--accent);
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background-color: var(--accent);
+  color: white;
 }
 
 .movie-list.netflix-style {
@@ -208,7 +220,6 @@ body {
   pointer-events: none;
 }
 
-/* Folder popup styling */
 .folder-popup {
   position: fixed;
   top: 0;
@@ -273,7 +284,6 @@ body {
   cursor: pointer;
 }
 
-/* Folder wrapper and layout */
 .folder-wrapper {
   display: flex;
   flex-direction: column;
@@ -283,7 +293,6 @@ body {
   position: relative;
 }
 
-/* Google Drive-like Folder */
 .drive-folder {
   box-sizing: border-box;
   width: 100%;
@@ -319,7 +328,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Folder name below the folder */
 .folder-name {
   font-size: 13px;
   font-weight: 600;
@@ -334,7 +342,6 @@ body {
   text-overflow: ellipsis;
 }
 
-/* Folder Actions (rename only now) */
 .folder-actions {
   position: absolute;
   bottom: 6px;
@@ -367,7 +374,6 @@ body {
   color: white;
 }
 
-/* ✅ Multi-select checkboxes */
 .folder-checkbox {
   position: absolute;
   top: 6px;
@@ -404,7 +410,6 @@ body {
   color: white;
 }
 
-/* Trash icon beside Watchlist title */
 .trash-icon {
   background: none;
   border: none;
